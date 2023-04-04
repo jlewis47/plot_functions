@@ -14,7 +14,7 @@ def make_magbeta(mags, betas, magbins):
     return (bins, relation)
 
 
-def plot_matbeta(fig, ax, mags, betas, redshift):
+def plot_magbeta(fig, ax, mags, betas, redshift):
 
     xy_plot(
         fig,
@@ -27,13 +27,17 @@ def plot_matbeta(fig, ax, mags, betas, redshift):
         yscale="log",
     )
 
-    if not os.path.isdir("./figs/"):
-        os.makedirs("./figs/")
+    # if not os.path.isdir("./figs/"):
+    #     os.makedirs("./figs/")
 
     ax.set_title(f"z={redshift:.1f}")
 
 
 def plot_magbeta_constraints(ax, redshift, mag_bins, delta_z=0.1):
+
+    """
+    TODO:add sim stuff from Wu+20, Shen+20, Vijayan+20/21
+    """
 
     lines = []
     labels = []

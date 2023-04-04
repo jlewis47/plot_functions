@@ -1,7 +1,5 @@
 import numpy as np
-from matplotlib import pyplot as plt
 import os
-from scipy.stats import binned_statistic
 
 from ..utils.utils import get_mod_path
 from ..generic.plot_functions import xy_plot
@@ -10,9 +8,9 @@ from ..generic.stat import xy_stat
 
 def make_hmsmr(mhalos, mstels, mbins):
 
-    hmsmr, bins = xy_stat(mhalos, mstels, mbins)
+    bins, hmsmr = xy_stat(mhalos, mstels, mbins)
 
-    return (hmsmr, bins)
+    return (bins, hmsmr)
 
 
 def plot_hmsmr(fig, ax, mhalo, mstel, redshift):
@@ -28,8 +26,8 @@ def plot_hmsmr(fig, ax, mhalo, mstel, redshift):
         yscale="log",
     )
 
-    if not os.path.isdir("./figs/"):
-        os.makedirs("./figs/")
+    # if not os.path.isdir("./figs/"):
+    #     os.makedirs("./figs/")
 
     ax.set_title(f"z={redshift:.1f}")
 

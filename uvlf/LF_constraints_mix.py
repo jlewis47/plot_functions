@@ -1,10 +1,10 @@
 import numpy as np
 import os
+from ..utils.utils import get_mod_path
 
 def get_LF_constr():
 
-        path = os.path.abspath(__file__)
-        dir_path = os.path.dirname(path)
+        dir_path = get_mod_path()
 
         wu2020_calzetti=np.asarray([-21.5, -4.903846153846153,
         -21.19999999999999, -4.571343858903859,
