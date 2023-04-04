@@ -30,7 +30,7 @@ def make_figure(*args, **kwargs):
 
 
 def xy_plot(
-    fig, ax, xs, ys, xlabel=None, ylabel=None, xscale="linear", yscale="linear"
+    fig, ax, xs, ys, xlabel=None, ylabel=None, xscale="linear", yscale="linear", plot_args={}
 ):
     """quick wrapper for a simple 2d plot
 
@@ -49,7 +49,7 @@ def xy_plot(
 
     # fig, ax = make_figure()
 
-    plots = [ax.plot(x, y) for x, y in zip(xs, ys)]
+    plots = [ax.plot(x, y, **plot_args) for x, y in zip(xs, ys)]
 
     ax.grid()
 
@@ -64,7 +64,7 @@ def xy_plot(
     return [plot[0] for plot in plots]
 
 
-def mf_plot(fig, ax, bins, mfs, xlabel=None, ylabel=None, xscale="log", yscale="log"):
+def mf_plot(fig, ax, bins, mfs, xlabel=None, ylabel=None, xscale="log", yscale="log", plot_args={}):
     """quick wrapper for a simple 2d plot
 
     Args:
@@ -80,7 +80,7 @@ def mf_plot(fig, ax, bins, mfs, xlabel=None, ylabel=None, xscale="log", yscale="
         yscale (_type_, optional): _description_. Defaults to 'linear'.
     """
 
-    plots = [ax.plot(bin, mf) for bin, mf in zip(bins, mfs)]
+    plots = [ax.plot(bin, mf, **plot_args) for bin, mf in zip(bins, mfs)]
 
     ax.grid()
 
