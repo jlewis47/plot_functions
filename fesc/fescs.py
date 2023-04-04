@@ -1,19 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.stats import binned_statistic
-from halo_properties.utils.utils import gather_h5py_files, ll_to_fof_suffix, get_r200_suffix, get_suffix
-from halo_properties.utils.output_paths import gen_paths
-from halo_properties.params.params import *
-from halo_properties.utils.functions_latest import get_infos
 import os
-import h5py
 # from generic.stat import xy_stat
-from generic.plot_functions import plot_xy
+from ..generic.plot_functions import xy_plot
 
 
 
 
-def fesc_plot(fig, ax, masses, fescs, labels, fesc_type, out_nb):
+def fesc_plot(fig, ax, masses, fescs, fesc_type, redshift, xlabel):
 
 
     fesc_labels = {'gas':"$\mathrm{f_{esc, g}}$",
@@ -22,15 +16,31 @@ def fesc_plot(fig, ax, masses, fescs, labels, fesc_type, out_nb):
 
     # plot_args = {'ls':'-', 'lw':3}
 
-    xy_plot(fig, ax, masses, fescs, legend=True, labels=labels,
-    xlabel='$\mathrm{Halo \, \, masses, \, M_\odot}$', ylabel=fesc_labels[fesc_type],
+    xy_plot(fig, ax, masses, fescs,
+    xlabel=xlabel, ylabel=fesc_labels[fesc_type],
     xscale='log', yscale='log')        
 
     if not os.path.isdir('./figs'): os.makedirs('./figs')
 
-    ax.set_title(f'snapshot {out_nb:d}, only star forming haloes')
+    ax.set_title(f'z={redshift:.1f}, star forming haloes')
 
     # fig.savefig(f'./figs/fesc_comparison_{fesc_type:s}_{out_nb:d}')
 
-    return(fig, ax)
 
+
+def fesc_Mh_plot(fig, ax, masses, fescs, fesc_type, redshift):
+
+    fesc_plot(fig, ax, masses, fescs, fesc_type, redshift, xlabel='$\mathrm{Halo \, \, masses, \, M_\odot}$')
+
+def fesc_Mst_plot(fig, ax, masses, fescs, fesc_type, redshift):
+
+    fesc_plot(fig, ax, masses, fescs, fesc_type, redshift, xlabel='$\mathrm{Stellar \, \, masses, \, M_\odot}$')
+
+
+def plot_Mh_fesc_constraints(ax, redshift):
+
+    pass    
+
+def plot_Mst_fesc_constraints(ax, redshift):
+
+    pass    
