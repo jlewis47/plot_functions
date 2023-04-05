@@ -30,7 +30,7 @@ def make_figure(*args, **kwargs):
 
 
 def xy_plot(
-    fig, ax, xs, ys, xlabel=None, ylabel=None, xscale="linear", yscale="linear", plot_args={}
+    fig, ax, xs, ys, xlabel=None, ylabel=None, xscale="linear", yscale="linear", xerrs=[], yerrs=[], plot_args={}
 ):
     """quick wrapper for a simple 2d plot
 
@@ -49,7 +49,12 @@ def xy_plot(
 
     # fig, ax = make_figure()
 
-    plots = [ax.plot(x, y, **plot_args) for x, y in zip(xs, ys)]
+    if xerrs==[]:
+        xerrs = [np.zeros_like(x) for x in xs]
+    if yerrs==[]:
+        yerrs = [np.zeros_like(x) for x in xs]
+
+    plots = [ax.errorbar(x, y, xerr=xerr, yerr=yerr **plot_args) for x, y, xerr, yerr in zip(xs, ys, xerrs, yerrs)]
 
     ax.grid()
 
@@ -64,7 +69,7 @@ def xy_plot(
     return [plot[0] for plot in plots]
 
 
-def mf_plot(fig, ax, bins, mfs, xlabel=None, ylabel=None, xscale="log", yscale="log", plot_args={}):
+def mf_plot(fig, ax, bins, mfs, xlabel=None, ylabel=None, xscale="log", yscale="log", xerrs=[], yerrs=[], plot_args={}):
     """quick wrapper for a simple 2d plot
 
     Args:
@@ -80,7 +85,12 @@ def mf_plot(fig, ax, bins, mfs, xlabel=None, ylabel=None, xscale="log", yscale="
         yscale (_type_, optional): _description_. Defaults to 'linear'.
     """
 
-    plots = [ax.plot(bin, mf, **plot_args) for bin, mf in zip(bins, mfs)]
+    if xerrs==[]:
+        xerrs = [np.zeros_like(x) for x in bins]
+    if yerrs==[]:
+        yerrs = [np.zeros_like(x) for x in bins]
+
+    plots = [ax.errorbar(bin, mf, xerr=xerr, yerr=yerr,  **plot_args) for bin, mf, xerr, yerr in zip(bins, mfs, xerrs, yerrs)]
 
     ax.grid()
 
