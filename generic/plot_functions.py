@@ -266,85 +266,33 @@ def density_plot_fancy(
         # hist_x_ax.set_ylim(1e-2,1)
         hist_x_ax.set_yscale("log")
 
+
+    if xlog and ylog:
+        extent=np.log10([binsx[0], binsx[-1], binsy[0], binsy[-1]])
+    elif xlog:
+        extent=[np.log10(binsx[0]), np.log10(binsx[-1]), binsy[0], binsy[-1]]
+    elif ylog:
+        extent=[binsx[0], binsx[-1], np.log10(binsy[0]), np.log10(binsy[-1])]
+    else:
+        extent=[binsx[0], binsx[-1], binsy[0], binsy[-1]]
+
     if collog:
-        if xlog and ylog:
             img = ax.imshow(
                 (stat.T),
-                extent=np.log10([binsx[0], binsx[-1], binsy[0], binsy[-1]]),
-                
-                origin="lower",
-                norm=LogNorm(vmin=vmin, vmax=vmax),
-                cmap=cmap,
-            )
-        elif xlog:
-            img = ax.imshow(
-                (stat.T),
-                extent=[np.log10(binsx[0]), np.log10(binsx[-1]), binsy[0], binsy[-1]],
-                
-                origin="lower",
-                norm=LogNorm(vmin=vmin, vmax=vmax),
-                cmap=cmap,
-            )
-        elif ylog:
-            img = ax.imshow(
-                (stat.T),
-                extent=[binsx[0], binsx[-1], np.log10(binsy[0]), np.log10(binsy[-1])],
-                
-                origin="lower",
-                norm=LogNorm(vmin=vmin, vmax=vmax),
-                cmap=cmap,
-            )
-        else:
-            img = ax.imshow(
-                (stat.T),
-                extent=[binsx[0], binsx[-1], binsy[0], binsy[-1]],
+                extent=extent,
                 
                 origin="lower",
                 norm=LogNorm(vmin=vmin, vmax=vmax),
                 cmap=cmap,
             )
     else:
-        if xlog and ylog:
             img = ax.imshow(
                 (stat.T),
-                extent=np.log10([binsx[0], binsx[-1], binsy[0], binsy[-1]]),
+                extent=extent,
                 
                 origin="lower",
-                vmin=vmin,
-                vmax=vmax,
                 cmap=cmap,
             )
-        elif xlog:
-            img = ax.imshow(
-                (stat.T),
-                extent=[np.log10(binsx[0]), np.log10(binsx[-1]), binsy[0], binsy[-1]],
-                
-                origin="lower",
-                vmin=vmin,
-                vmax=vmax,
-                cmap=cmap,
-            )
-        elif ylog:
-            img = ax.imshow(
-                (stat.T),
-                extent=[binsx[0], binsx[-1], np.log10(binsy[0]), np.log10(binsy[-1])],
-                
-                origin="lower",
-                vmin=vmin,
-                vmax=vmax,
-                cmap=cmap,
-            )
-        else:
-            img = ax.imshow(
-                (stat.T),
-                extent=[binsx[0], binsx[-1], binsy[0], binsy[-1]],
-                
-                origin="lower",
-                vmin=vmin,
-                vmax=vmax,
-                cmap=cmap,
-            )
-
 
     ax.grid()
 
