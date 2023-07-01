@@ -1,0 +1,272 @@
+<table width="100%" class="fm" frame="hsides" rules="groups">
+<thead>
+<tr>
+<th align="left">Id</th>
+<th align="center"><span class="img-inline"><img src="/articles/aa/full_html/2020/05/aa37143-19/aa37143-19-eq4.gif" width="17" height="19" /></span></th>
+<th align="center"><i>L</i><sub>dust</sub>[<i>L</i><sub>&#8857;</sub>]</th>
+<th align="center"><i>L</i><sub>dust</sub>_err[<i>L</i><sub>&#8857;</sub>]</th>
+<th align="center"><i>L</i><sub>FUV</sub>[<i>L</i><sub>&#8857;</sub>]</th>
+<th align="center"><i>L</i><sub>FUV</sub>_err[<i>L</i><sub>&#8857;</sub>]</th>
+<th align="center"><i>M</i><sub>dust</sub>[<i>M</i><sub>&#8857;</sub>]</th>
+<th align="center"><i>M</i><sub>dust</sub>_err[<i>M</i><sub>&#8857;</sub>]</th>
+<th align="center"><i>M</i><sub>star</sub>[<i>M</i><sub>&#8857;</sub>]</th>
+<th align="center"><i>M</i><sub>star</sub>_err[<i>M</i><sub>&#8857;</sub>]</th>
+<th align="center">SFR[<i>M</i><sub>&#8857;</sub> yr<sup>&#8722;1</sup>]</th>
+<th align="center">SFR_err[<i>M</i><sub>&#8857;</sub> yr<sup>&#8722;1</sup>]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">ID27</td>
+<td align="center">0.442</td>
+<td align="center">6.352&#8197;&#215;&#8197;10<sup>9</sup></td>
+<td align="center">8.123&#8197;&#215;&#8197;10<sup>9</sup></td>
+<td align="center">3.759&#8197;&#215;&#8197;10<sup>10</sup></td>
+<td align="center">1.880&#8197;&#215;&#8197;10<sup>9</sup></td>
+<td align="center">2.335&#8197;&#215;&#8197;10<sup>6</sup></td>
+<td align="center">2.986&#8197;&#215;&#8197;10<sup>6</sup></td>
+<td align="center">1.549&#8197;&#215;&#8197;10<sup>8</sup></td>
+<td align="center">1.725&#8197;&#215;&#8197;10<sup>8</sup></td>
+<td align="center">9.705</td>
+<td align="center">2.255</td>
+</tr>
+<tr>
+<td align="left">ID31</td>
+<td align="center">0.155</td>
+<td align="center">4.827&#8197;&#215;&#8197;10<sup>9</sup></td>
+<td align="center">6.545&#8197;&#215;&#8197;10<sup>9</sup></td>
+<td align="center">6.133&#8197;&#215;&#8197;10<sup>10</sup></td>
+<td align="center">3.066&#8197;&#215;&#8197;10<sup>9</sup></td>
+<td align="center">1.775&#8197;&#215;&#8197;10<sup>6</sup></td>
+<td align="center">2.406&#8197;&#215;&#8197;10<sup>6</sup></td>
+<td align="center">3.342&#8197;&#215;&#8197;10<sup>8</sup></td>
+<td align="center">3.277&#8197;&#215;&#8197;10<sup>8</sup></td>
+<td align="center">12.368</td>
+<td align="center">2.391</td>
+</tr>
+<tr>
+<td align="left">lbg10</td>
+<td align="center">0.272</td>
+<td align="center">7.967&#8197;&#215;&#8197;10<sup>10</sup></td>
+<td align="center">4.876&#8197;&#215;&#8197;10<sup>10</sup></td>
+<td align="center">1.733&#8197;&#215;&#8197;10<sup>10</sup></td>
+<td align="center">8.665&#8197;&#215;&#8197;10<sup>8</sup></td>
+<td align="center">2.929&#8197;&#215;&#8197;10<sup>7</sup></td>
+<td align="center">1.793&#8197;&#215;&#8197;10<sup>7</sup></td>
+<td align="center">6.409&#8197;&#215;&#8197;10<sup>8</sup></td>
+<td align="center">3.425&#8197;&#215;&#8197;10<sup>8</sup></td>
+<td align="center">13.590</td>
+<td align="center">10.544</td>
+</tr>
+<tr>
+<td align="left">HZ4</td>
+<td align="center">0.545</td>
+<td align="center">1.965&#8197;&#215;&#8197;10<sup>11</sup></td>
+<td align="center">6.329&#8197;&#215;&#8197;10<sup>10</sup></td>
+<td align="center">2.171&#8197;&#215;&#8197;10<sup>11</sup></td>
+<td align="center">1.085&#8197;&#215;&#8197;10<sup>10</sup></td>
+<td align="center">7.224&#8197;&#215;&#8197;10<sup>7</sup></td>
+<td align="center">2.326&#8197;&#215;&#8197;10<sup>7</sup></td>
+<td align="center">1.169&#8197;&#215;&#8197;10<sup>10</sup></td>
+<td align="center">2.468&#8197;&#215;&#8197;10<sup>9</sup></td>
+<td align="center">36.933</td>
+<td align="center">7.462</td>
+</tr>
+<tr>
+<td align="left">HZ9</td>
+<td align="center">3.260</td>
+<td align="center">5.255&#8197;&#215;&#8197;10<sup>11</sup></td>
+<td align="center">6.259&#8197;&#215;&#8197;10<sup>10</sup></td>
+<td align="center">1.065&#8197;&#215;&#8197;10<sup>11</sup></td>
+<td align="center">5.323&#8197;&#215;&#8197;10<sup>9</sup></td>
+<td align="center">1.932&#8197;&#215;&#8197;10<sup>8</sup></td>
+<td align="center">2.301&#8197;&#215;&#8197;10<sup>7</sup></td>
+<td align="center">6.645&#8197;&#215;&#8197;10<sup>9</sup></td>
+<td align="center">1.473&#8197;&#215;&#8197;10<sup>9</sup></td>
+<td align="center">52.271</td>
+<td align="center">6.617</td>
+</tr>
+<tr>
+<td align="left">lbg53</td>
+<td align="center">1.134</td>
+<td align="center">4.525&#8197;&#215;&#8197;10<sup>10</sup></td>
+<td align="center">3.716&#8197;&#215;&#8197;10<sup>10</sup></td>
+<td align="center">3.521&#8197;&#215;&#8197;10<sup>10</sup></td>
+<td align="center">1.760&#8197;&#215;&#8197;10<sup>9</sup></td>
+<td align="center">1.663&#8197;&#215;&#8197;10<sup>7</sup></td>
+<td align="center">1.366&#8197;&#215;&#8197;10<sup>7</sup></td>
+<td align="center">1.144&#8197;&#215;&#8197;10<sup>9</sup></td>
+<td align="center">4.967&#8197;&#215;&#8197;10<sup>8</sup></td>
+<td align="center">8.347</td>
+<td align="center">6.023</td>
+</tr>
+<tr>
+<td align="left">MACSJD1149</td>
+<td align="center">0.470</td>
+<td align="center">2.963&#8197;&#215;&#8197;10<sup>11</sup></td>
+<td align="center">9.010&#8197;&#215;&#8197;10<sup>10</sup></td>
+<td align="center">9.870&#8197;&#215;&#8197;10<sup>10</sup></td>
+<td align="center">4.935&#8197;&#215;&#8197;10<sup>9</sup></td>
+<td align="center">1.089&#8197;&#215;&#8197;10<sup>8</sup></td>
+<td align="center">3.312 &#215; 10<sup>7</sup></td>
+<td align="center">1.038 &#215; 10<sup>10</sup></td>
+<td align="center">2.595 &#215; 10<sup>9</sup></td>
+<td align="center">30.810</td>
+<td align="center">7.835</td>
+</tr>
+<tr>
+<td align="left">566428</td>
+<td align="center">0.309</td>
+<td align="center">2.557 &#215; 10<sup>11</sup></td>
+<td align="center">1.856 &#215; 10<sup>11</sup></td>
+<td align="center">1.657 &#215; 10<sup>11</sup></td>
+<td align="center">1.283 &#215; 10<sup>10</sup></td>
+<td align="center">9.401 &#215; 10<sup>7</sup></td>
+<td align="center">6.822 &#215; 10<sup>7</sup></td>
+<td align="center">1.404 &#215; 10<sup>10</sup></td>
+<td align="center">3.351 &#215; 10<sup>9</sup></td>
+<td align="center">33.097</td>
+<td align="center">21.002</td>
+</tr>
+<tr>
+<td align="left">HZ2</td>
+<td align="center">2.282</td>
+<td align="center">9.420 &#215; 10<sup>7</sup></td>
+<td align="center">1.189 &#215; 10<sup>10</sup></td>
+<td align="center">1.603 &#215; 10<sup>11</sup></td>
+<td align="center">8.016 &#215; 10<sup>9</sup></td>
+<td align="center">3.463 &#215; 10<sup>6</sup></td>
+<td align="center">4.371 &#215; 10<sup>6</sup></td>
+<td align="center">1.900 &#215; 10<sup>10</sup></td>
+<td align="center">3.587 &#215; 10<sup>9</sup></td>
+<td align="center">15.596</td>
+<td align="center">2.741</td>
+</tr>
+<tr>
+<td align="left">HZ10</td>
+<td align="center">3.652</td>
+<td align="center">1.275 &#215; 10<sup>12</sup></td>
+<td align="center">8.743 &#215; 10<sup>10</sup></td>
+<td align="center">1.227 &#215; 10<sup>11</sup></td>
+<td align="center">1.019 &#215; 10<sup>10</sup></td>
+<td align="center">4.688 &#215; 10<sup>8</sup></td>
+<td align="center">3.214 &#215; 10<sup>7</sup></td>
+<td align="center">3.018 &#215; 10<sup>7</sup></td>
+<td align="center">4.225 &#215; 10<sup>9</sup></td>
+<td align="center">69.682</td>
+<td align="center">6.826</td>
+</tr>
+<tr>
+<td align="left">HZ8</td>
+<td align="center">1.735</td>
+<td align="center">9.815 &#215; 10<sup>9</sup></td>
+<td align="center">1.134 &#215; 10<sup>10</sup></td>
+<td align="center">1.747 &#215; 10<sup>11</sup></td>
+<td align="center">8.734 &#215; 10<sup>9</sup></td>
+<td align="center">3.608 &#215; 10<sup>6</sup></td>
+<td align="center">4.168 &#215; 10<sup>6</sup></td>
+<td align="center">1.322 &#215; 10<sup>10</sup></td>
+<td align="center">2.055 &#215; 10<sup>9</sup></td>
+<td align="center">12.006</td>
+<td align="center">2.347</td>
+</tr>
+<tr>
+<td align="left">HZ7</td>
+<td align="center">0.593</td>
+<td align="center">2.831 &#215; 10<sup>10</sup></td>
+<td align="center">3.034 &#215; 10<sup>10</sup></td>
+<td align="center">1.519 &#215; 10<sup>11</sup></td>
+<td align="center">7.594 &#215; 10<sup>9</sup></td>
+<td align="center">1.041 &#215; 10<sup>7</sup></td>
+<td align="center">1.115 &#215; 10<sup>7</sup></td>
+<td align="center">1.342 &#215; 10<sup>10</sup></td>
+<td align="center">2.410 &#215; 10<sup>9</sup></td>
+<td align="center">10.312</td>
+<td align="center">4.663</td>
+</tr>
+<tr>
+<td align="left">HZ1</td>
+<td align="center">0.484</td>
+<td align="center">1.298 &#215; 10<sup>10</sup></td>
+<td align="center">1.544 &#215; 10<sup>10</sup></td>
+<td align="center">1.739 &#215; 10<sup>11</sup></td>
+<td align="center">8.694 &#215; 10<sup>9</sup></td>
+<td align="center">4.773 &#215; 10<sup>6</sup></td>
+<td align="center">5.676 &#215; 10<sup>6</sup></td>
+<td align="center">2.423 &#215; 10<sup>10</sup></td>
+<td align="center">4.157 &#215; 10<sup>9</sup></td>
+<td align="center">11.801</td>
+<td align="center">2.932</td>
+</tr>
+<tr>
+<td align="left">HZ6</td>
+<td align="center">2.196</td>
+<td align="center">3.475 &#215; 10<sup>11</sup></td>
+<td align="center">1.738 &#215; 10<sup>10</sup></td>
+<td align="center">3.147 &#215; 10<sup>11</sup></td>
+<td align="center">1.573 &#215; 10<sup>10</sup></td>
+<td align="center">1.278 &#215; 10<sup>8</sup></td>
+<td align="center">6.388 &#215; 10<sup>6</sup></td>
+<td align="center">2.922 &#215; 10<sup>10</sup></td>
+<td align="center">3.131 &#215; 10<sup>9</sup></td>
+<td align="center">29.039</td>
+<td align="center">7.748</td>
+</tr>
+<tr>
+<td align="left">lbg48</td>
+<td align="center">0.216</td>
+<td align="center">3.614 &#215; 10<sup>10</sup></td>
+<td align="center">5.015 &#215; 10<sup>10</sup></td>
+<td align="center">3.346 &#215; 10<sup>10</sup></td>
+<td align="center">1.673 &#215; 10<sup>9</sup></td>
+<td align="center">1.329 &#215; 10<sup>7</sup></td>
+<td align="center">1.843 &#215; 10<sup>7</sup></td>
+<td align="center">5.096 &#215; 10<sup>9</sup></td>
+<td align="center">1.021 &#215; 10<sup>9</sup></td>
+<td align="center">4.106</td>
+<td align="center">5.002</td>
+</tr>
+<tr>
+<td align="left">WMH5</td>
+<td align="center">1.951</td>
+<td align="center">4.284 &#215; 10<sup>11</sup></td>
+<td align="center">5.828 &#215; 10<sup>10</sup></td>
+<td align="center">2.056 &#215; 10<sup>11</sup></td>
+<td align="center">1.051 &#215; 10<sup>10</sup></td>
+<td align="center">1.575 &#215; 10<sup>8</sup></td>
+<td align="center">2.142 &#215; 10<sup>7</sup></td>
+<td align="center">2.677 &#215; 10<sup>10</sup></td>
+<td align="center">3.744 &#215; 10<sup>9</sup></td>
+<td align="center">22.695</td>
+<td align="center">2.431</td>
+</tr>
+<tr>
+<td align="left">HZ3</td>
+<td align="center">0.837</td>
+<td align="center">3.310 &#215; 10<sup>10</sup></td>
+<td align="center">3.986 &#215; 10<sup>10</sup></td>
+<td align="center">1.308 &#215; 10<sup>11</sup></td>
+<td align="center">6.540 &#215; 10<sup>9</sup></td>
+<td align="center">1.217 &#215; 10<sup>7</sup></td>
+<td align="center">1.465 &#215; 10<sup>7</sup></td>
+<td align="center">1.434 &#215; 10<sup>10</sup></td>
+<td align="center">2.214 &#215; 10<sup>9</sup></td>
+<td align="center">7.356</td>
+<td align="center">4.944</td>
+</tr>
+<tr>
+<td align="left">CLM1</td>
+<td align="center">0.990</td>
+<td align="center">7.776 &#215; 10<sup>9</sup></td>
+<td align="center">4.916 &#215; 10<sup>9</sup></td>
+<td align="center">2.693 &#215; 10<sup>11</sup></td>
+<td align="center">2.109 &#215; 10<sup>10</sup></td>
+<td align="center">2.859 &#215; 10<sup>6</sup></td>
+<td align="center">1.807 &#215; 10<sup>6</sup></td>
+<td align="center">2.451 &#215; 10<sup>10</sup></td>
+<td align="center">6.059 &#215; 10<sup>9</sup></td>
+<td align="center">9.654</td>
+<td align="center">1.500</td>
+</tr>
+</tbody>
+</table>

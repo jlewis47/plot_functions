@@ -24,23 +24,22 @@ def make_smf(stellar_masses, bins, box_size):
         box_size (_type_): size of box in cMpc
     """
 
-    bins, smf_no_units = mass_function(stellar_masses, bins)
+    bins, smf_no_units, pois_err = mass_function(stellar_masses, bins)
 
-    return(bins, smf_no_units / box_size**3)
+    return(bins, smf_no_units / box_size**3, pois_err / box_size**3)
 
-def smf_plot(fig, ax, mass_bins, smfs, redshift):
+def smf_plot(fig, ax, mass_bins, smfs, xerrs=[], yerrs=[], **plot_args):
 
 
 
     # plot_args = {'ls':'-', 'lw':3}
 
     lines = mf_plot(fig, ax, mass_bins, smfs,
-    xlabel='$\mathrm{Halo \, \, masses, \, M_\odot}$', ylabel="$\mathrm{SMF, M_\odot^{-1}.cMpc^{-3}}$",
-    xscale='log', yscale='log')        
+    xlabel='$\mathrm{Stellar \, \, masses, \, M_\odot}$', ylabel="$\mathrm{SMF, M_\odot^{-1}.cMpc^{-3}}$",
+    xscale='log', yscale='log', xerrs=xerrs, yerrs=yerrs, **plot_args)        
 
     if not os.path.isdir('./figs/'): os.makedirs('./figs/')
 
-    ax.set_title(f'z={redshift:.1f}')
 
     return(lines)
 

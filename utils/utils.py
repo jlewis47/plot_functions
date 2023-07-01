@@ -6,3 +6,12 @@ def get_mod_path():
     dir_path = os.path.dirname(path)
 
     return dir_path
+
+def is_iter(test):
+
+    try:
+        iter(test)
+        return(True)
+    except TypeError:
+        return(False)
+
