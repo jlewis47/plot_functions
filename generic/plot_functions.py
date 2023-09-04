@@ -4,6 +4,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from matplotlib.colors import LogNorm
 import matplotlib
 from ..utils.utils import is_iter
+#from scipy.stats import gaussian_kde
 
 
 def get_fig_sizes(keys):
@@ -386,3 +387,30 @@ def density_plot_fancy(
 
     else:
         return (hist_x_ax, hist_y_ax)
+
+def joe_violin(fig, ax, xs, datas, bins=None, **plot_args):
+
+    """
+    xs: positions of distribution [N]
+    datas: distributions [Nx...] 
+
+    """
+
+    if bins==None:
+        mi,mx = np.min(np.concatenate(data)), np.max(np.concatenate(data))
+        nbins = np.log10(ma/mi)*4
+        bins=np.logspace()
+
+    pdfs=[]
+    #for every data, generate pdf
+    for data in datas:
+        #kernel = gaussian_kde(data)
+        #pdfs.append(kernel(bins))
+        hist = np.histogram(data, bins=bins)
+        pdfs.append(hist[0]/np.sum(hist[0]))
+
+    #for every x,pdf pair, plot 
+    for x, pdf in zip(xs, pdfs):
+        ax.plot(np.full(x,len(pdf)),pdf, **plot_args)
+
+        
