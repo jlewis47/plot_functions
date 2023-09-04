@@ -7,46 +7,42 @@ from ..utils.utils import is_iter
 
 
 def get_fig_sizes(keys):
-
-    if type(keys[0])==str:
+    if type(keys[0]) == str:
         keys = list(keys)
 
-    figs_sizes={"a4":(11.7,8.3),
-            "col_width":10./3,
-            "page_width":20./3}
+    figs_sizes = {"a4": (11.7, 8.3), "col_width": 10.0 / 3, "page_width": 20.0 / 3}
 
-    return([figs_sizes[key] for key in keys])
+    return [figs_sizes[key] for key in keys]
+
 
 def setup_plotting(scale_up=1):
-
-    plt.rcParams['ytick.major.size']=10*scale_up
-    plt.rcParams['ytick.major.width']=1.5*scale_up
-    plt.rcParams['ytick.minor.size']=7*scale_up
-    plt.rcParams['ytick.minor.width']=1*scale_up
-    plt.rcParams['xtick.major.size']=10*scale_up
-    plt.rcParams['xtick.major.width']=1.5*scale_up
-    plt.rcParams['xtick.minor.size']=7*scale_up
-    plt.rcParams['xtick.minor.width']=1*scale_up
-    plt.rcParams['axes.linewidth']=1.75*scale_up
-    plt.rcParams['font.size']= 10*scale_up
-    plt.rcParams['legend.fontsize']= 10*scale_up
-    plt.rcParams['legend.framealpha']= 0.0
-    #plt.rcParams['figure.dpi']= 200 
-    plt.rcParams['figure.figsize']= tuple(get_fig_sizes(["col_width","col_width"]))
-    plt.rcParams["xtick.direction"]='in'
-    plt.rcParams["xtick.top"]=True
-    plt.rcParams["ytick.direction"]='in'
-    plt.rcParams["ytick.right"]=True
-    plt.rcParams["image.origin"]='lower'
-    plt.rcParams["image.aspect"]='auto'
-    plt.rcParams["markers.fillstyle"]='none'
+    plt.rcParams["ytick.major.size"] = 10 * scale_up
+    plt.rcParams["ytick.major.width"] = 1.5 * scale_up
+    plt.rcParams["ytick.minor.size"] = 7 * scale_up
+    plt.rcParams["ytick.minor.width"] = 1 * scale_up
+    plt.rcParams["xtick.major.size"] = 10 * scale_up
+    plt.rcParams["xtick.major.width"] = 1.5 * scale_up
+    plt.rcParams["xtick.minor.size"] = 7 * scale_up
+    plt.rcParams["xtick.minor.width"] = 1 * scale_up
+    plt.rcParams["axes.linewidth"] = 1.75 * scale_up
+    plt.rcParams["font.size"] = 10 * scale_up
+    plt.rcParams["legend.fontsize"] = 10 * scale_up
+    plt.rcParams["legend.framealpha"] = 0.0
+    # plt.rcParams['figure.dpi']= 200
+    plt.rcParams["figure.figsize"] = tuple(get_fig_sizes(["col_width", "col_width"]))
+    plt.rcParams["xtick.direction"] = "in"
+    plt.rcParams["xtick.top"] = True
+    plt.rcParams["ytick.direction"] = "in"
+    plt.rcParams["ytick.right"] = True
+    plt.rcParams["image.origin"] = "lower"
+    plt.rcParams["image.aspect"] = "auto"
+    plt.rcParams["markers.fillstyle"] = "none"
     # plt.rcParams["savefig.fillstyle"]='empty'
 
 
 def make_figure(*args, **kwargs):
-
     if "figsize_key" in kwargs:
-        kwargs["figsize"]=get_fig_sizes(kwargs["figsize_key"])
+        kwargs["figsize"] = get_fig_sizes(kwargs["figsize_key"])
 
     fig = plt.figure(*args, **kwargs)
     ax = fig.add_subplot(111)
@@ -54,8 +50,74 @@ def make_figure(*args, **kwargs):
     return (fig, ax)
 
 
-def xy_plot(
-    fig, ax, xs, ys, xlabel=None, ylabel=None, xscale="log", yscale="log", xerrs=[], yerrs=[], **plot_args
+def xy_plot_stat(
+    fig,
+    ax,
+    bins,
+    stats,
+    x_low_counts=None,
+    y_low_counts=None,
+    xlabel=None,
+    ylabel=None,
+    xscale="log",
+    yscale="log",
+    **plot_args
+):
+    keys = list(stats.keys())
+
+    median_ls = "-"
+    lines = []
+    labels = []
+
+    if "mean" in keys:
+        l,=ax.plot(bins, stats["mean"], ls="-", **plot_args)
+        median_ls = "--"
+        lines.append(l)
+        labels.append("mean")
+
+    if not "c" in plot_args and not "color" in plot_args:
+        plot_args["color"] = l.get_color()
+
+    if "median" in keys:
+        l,=ax.plot(bins, stats["median"], ls=median_ls, **plot_args)
+        lines.append(l)
+        labels.append("median")
+
+    if "p5" in keys and "p95" in keys:
+        l=ax.fill_between(bins, stats["p5"], stats["p95"], alpha=0.5, **plot_args)
+        lines.append(l)
+        labels.append("5-95 pcnt")
+
+    if np.any(x_low_counts != None) and np.any(y_low_counts != None):
+        l=ax.scatter(x_low_counts, y_low_counts, alpha=0.5, **plot_args)
+        lines.append(l)
+        labels.append("")
+
+    ax.grid()
+
+    ax.set_xscale(xscale)
+    ax.set_yscale(yscale)
+
+    if xlabel != None:
+        ax.set_xlabel(xlabel)
+    if ylabel != None:
+        ax.set_ylabel(ylabel)
+
+    return(tuple(lines), tuple(labels))
+
+
+def xy_plot_vect(
+    fig,
+    ax,
+    xs,
+    ys,
+    xlabel=None,
+    ylabel=None,
+    xscale="log",
+    yscale="log",
+    xerrs=[],
+    yerrs=[],
+    **plot_args
 ):
     """quick wrapper for a simple 2d plot
 
@@ -84,30 +146,41 @@ def xy_plot(
     if ylabel != None:
         ax.set_ylabel(ylabel)
 
-
     if is_iter(xs[0]):
-        if xerrs==[]:
+        if xerrs == []:
             xerrs = [np.zeros_like(x) for x in xs]
-        if yerrs==[]:
+        if yerrs == []:
             yerrs = [np.zeros_like(x) for x in xs]
 
-        plots = [ax.errorbar(x, y, xerr=xerr, yerr=yerr, **plot_args)[0] for x, y, xerr, yerr in zip(xs, ys, xerrs, yerrs)]
+        plots = [
+            ax.errorbar(x, y, xerr=xerr, yerr=yerr, **plot_args)[0]
+            for x, y, xerr, yerr in zip(xs, ys, xerrs, yerrs)
+        ]
 
     else:
-        if xerrs==[]:
+        if xerrs == []:
             xerrs = np.zeros_like(xs)
-        if yerrs==[]:
+        if yerrs == []:
             yerrs = np.zeros_like(xs)
 
         plots = ax.errorbar(xs, ys, xerr=xerrs, yerr=yerrs, **plot_args)[0]
 
     return plots
 
-    
 
-
-
-def mf_plot(fig, ax, bins, mfs, xlabel=None, ylabel=None, xscale="log", yscale="log", xerrs=[], yerrs=[], **plot_args):
+def mf_plot(
+    fig,
+    ax,
+    bins,
+    mfs,
+    xlabel=None,
+    ylabel=None,
+    xscale="log",
+    yscale="log",
+    xerrs=[],
+    yerrs=[],
+    **plot_args
+):
     """quick wrapper for a simple 2d plot
 
     Args:
@@ -123,24 +196,24 @@ def mf_plot(fig, ax, bins, mfs, xlabel=None, ylabel=None, xscale="log", yscale="
         yscale (_type_, optional): _description_. Defaults to 'linear'.
     """
 
-
-
-
     if is_iter(bins[0]):
-        if xerrs==[]:
+        if xerrs == []:
             xerrs = [np.zeros_like(x) for x in bins]
-        if yerrs==[]:
+        if yerrs == []:
             yerrs = [np.zeros_like(x) for x in bins]
 
-        plots = [ax.errorbar(bin, mf, xerr=xerr, yerr=yerr,  **plot_args)[0] for bin, mf, xerr, yerr in zip(bins, mfs, xerrs, yerrs)]
+        plots = [
+            ax.errorbar(bin, mf, xerr=xerr, yerr=yerr, **plot_args)[0]
+            for bin, mf, xerr, yerr in zip(bins, mfs, xerrs, yerrs)
+        ]
 
     else:
-        if xerrs==[]:
+        if xerrs == []:
             xerrs = np.zeros_like(bins)
-        if yerrs==[]:
+        if yerrs == []:
             yerrs = np.zeros_like(bins)
-        
-        plots = ax.errorbar(bins, mfs, xerr=xerrs, yerr=yerrs,  **plot_args)[0]
+
+        plots = ax.errorbar(bins, mfs, xerr=xerrs, yerr=yerrs, **plot_args)[0]
 
     ax.grid()
 
@@ -154,14 +227,18 @@ def mf_plot(fig, ax, bins, mfs, xlabel=None, ylabel=None, xscale="log", yscale="
 
     return plots
 
+
 def subplots_land():
-    pass    
+    pass
+
 
 def subplots_port():
     pass
 
+
 def mk_shared_colorbar():
     pass
+
 
 def density_plot_fancy(
     fig,
@@ -181,11 +258,9 @@ def density_plot_fancy(
     yhist_log=True,
     **kwargs
 ):
-
     """
     UPDATE
     """
-
 
     vmin = np.nanmin(stat)
     vmax = np.nanmax(stat)
@@ -207,7 +282,7 @@ def density_plot_fancy(
     current_cmap.set_bad(color="white")
 
     print("Found (vmin,vmax)=(%.1e,%.1e)" % (vmin, vmax))
-    
+
     hist_1d_ticks = [0.0, 0.5, 1.0]
 
     divider = make_axes_locatable(ax)
@@ -257,7 +332,8 @@ def density_plot_fancy(
 
     ax.yaxis.set_tick_params(left=False, labelleft=False, which="both")
     ax.xaxis.set_tick_params(bottom=False, labelbottom=False, which="both")
-    if cb: cax = divider.append_axes("right", size="5%", pad=0.125)
+    if cb:
+        cax = divider.append_axes("right", size="5%", pad=0.125)
 
     if yhist_log:
         # hist_y_ax.set_xlim(1e-2,1)
@@ -266,33 +342,30 @@ def density_plot_fancy(
         # hist_x_ax.set_ylim(1e-2,1)
         hist_x_ax.set_yscale("log")
 
-
     if xlog and ylog:
-        extent=np.log10([binsx[0], binsx[-1], binsy[0], binsy[-1]])
+        extent = np.log10([binsx[0], binsx[-1], binsy[0], binsy[-1]])
     elif xlog:
-        extent=[np.log10(binsx[0]), np.log10(binsx[-1]), binsy[0], binsy[-1]]
+        extent = [np.log10(binsx[0]), np.log10(binsx[-1]), binsy[0], binsy[-1]]
     elif ylog:
-        extent=[binsx[0], binsx[-1], np.log10(binsy[0]), np.log10(binsy[-1])]
+        extent = [binsx[0], binsx[-1], np.log10(binsy[0]), np.log10(binsy[-1])]
     else:
-        extent=[binsx[0], binsx[-1], binsy[0], binsy[-1]]
+        extent = [binsx[0], binsx[-1], binsy[0], binsy[-1]]
 
     if collog:
-            img = ax.imshow(
-                (stat.T),
-                extent=extent,
-                
-                origin="lower",
-                norm=LogNorm(vmin=vmin, vmax=vmax),
-                cmap=cmap,
-            )
+        img = ax.imshow(
+            (stat.T),
+            extent=extent,
+            origin="lower",
+            norm=LogNorm(vmin=vmin, vmax=vmax),
+            cmap=cmap,
+        )
     else:
-            img = ax.imshow(
-                (stat.T),
-                extent=extent,
-                
-                origin="lower",
-                cmap=cmap,
-            )
+        img = ax.imshow(
+            (stat.T),
+            extent=extent,
+            origin="lower",
+            cmap=cmap,
+        )
 
     ax.grid()
 
@@ -310,7 +383,6 @@ def density_plot_fancy(
         # cax.set_yticklabels(["%.1e"%10**float(tick.get_text()) for tick in cax_ticks])
 
         return (hist_x_ax, hist_y_ax, cax)
-    
-    else:
 
+    else:
         return (hist_x_ax, hist_y_ax)

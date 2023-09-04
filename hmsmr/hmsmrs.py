@@ -3,32 +3,30 @@ import os
 import h5py
 
 from ..utils.utils import get_mod_path
-from ..generic.plot_functions import xy_plot
+from ..generic.plot_functions import xy_plot_vect
 from ..generic.stat import xy_stat
 
 
 def make_hmsmr(mhalos, mstels, mbins):
-
     bins, hmsmr = xy_stat(mhalos, mstels, mbins)
 
     return (bins, hmsmr)
 
 
 def plot_hmsmr(fig, ax, mhalo, mstel, redshift, **plot_args):
+    if "xscale" not in plot_args:
+        plot_args["xscale"] = "log"
+    if "yscale" not in plot_args:
+        plot_args["yscale"] = "log"
 
-    if 'xscale' not in plot_args:
-        plot_args['xscale']='log'
-    if 'yscale' not in plot_args:
-        plot_args['yscale']='log'
-
-    xy_plot(
+    xy_plot_vect(
         fig,
         ax,
         mhalo,
         mstel,
         xlabel="$\mathrm{Halo \, Mass, \, M_\odot}$",
         ylabel="$\mathrm{Stellar \, Mass, \, M_\odot}$",
-        **plot_args
+        **plot_args,
     )
 
     # if not os.path.isdir("./figs/"):
@@ -38,7 +36,6 @@ def plot_hmsmr(fig, ax, mhalo, mstel, redshift, **plot_args):
 
 
 def plot_hmsmr_constraints(ax, redshift, log=False, **plot_args):
-
     dir_path = get_mod_path()
 
     reed_path = os.path.join(dir_path, "../constraints/read_2017_vals")
@@ -189,7 +186,6 @@ def plot_hmsmr_constraints(ax, redshift, log=False, **plot_args):
 
     red_inds = np.abs(redshift - stef21_smhm[:, 0]) < 0.45
     if np.any(red_inds):
-
         yerr = [
             np.abs(
                 10 ** stef21_smhm[red_inds, 1]
@@ -223,7 +219,7 @@ def plot_hmsmr_constraints(ax, redshift, log=False, **plot_args):
             markersize=10,
             xlolims=stef21_smhm[red_inds, -1] == 1.0,
             zorder=15,
-            **plot_args
+            **plot_args,
         )
 
         lines.append(steph_line)
@@ -247,7 +243,7 @@ def plot_hmsmr_constraints(ax, redshift, log=False, **plot_args):
         color="k",
         markersize=10,
         zorder=15,
-        **plot_args
+        **plot_args,
     )
     label_read = "$\mathrm{z=0}$, Read+2017"
 
@@ -259,8 +255,6 @@ def plot_hmsmr_constraints(ax, redshift, log=False, **plot_args):
     )
     label_sphx = "SPHINX z=6 (Rosdahl+2018)"
 
-
-
     lines.append(line_sphx[0])
     labels.append(label_sphx)
 
@@ -269,43 +263,36 @@ def plot_hmsmr_constraints(ax, redshift, log=False, **plot_args):
     return (lines, labels)
 
 
-def plot_dustier_hmsmr(ax, redshift, zprec=0.1,log=False,  **plot_args):
-
+def plot_dustier_hmsmr(ax, redshift, zprec=0.1, log=False, **plot_args):
     dir_path = get_mod_path()
 
-    label="DUSTiER"
+    label = "DUSTiER"
 
-    with h5py.File(os.path.join(dir_path,"../constraints/dustier_hmsmr")) as src:
-
+    with h5py.File(os.path.join(dir_path, "../constraints/dustier_hmsmr")) as src:
         keys = list(src.keys())
-        redshifts = [float(k.split('_')[-1].lstrip('z')) for k in keys if "mst" in k]
+        redshifts = np.asarray([float(k.split("_")[-1].lstrip("z")) for k in keys if "mst" in k])
         Ms_keys = [k for k in keys if "mst" in k]
-        
+
         dist = np.abs(redshift - redshifts)
 
         # print(keys, redshifts, mag_keys, dist)
         if np.any(dist):
-
             whs = np.argmin(dist)
 
-            Mss = src[Ms_keys[whs]][()]/0.8 # correct for 1/(1. - eta_sn)
+            Mss = src[Ms_keys[whs]][()] / 0.8  # correct for 1/(1. - eta_sn)
             bins = src["mbins"][()]
 
             # print(mags)
 
-
-
             # print(len(bins), len(Mss))
 
             if log:
-                    bins = np.log10(bins)
-                    Mss = np.log10(Mss)
-            
-            l,=ax.plot(bins, Mss, **plot_args)
-            
+                bins = np.log10(bins)
+                Mss = np.log10(Mss)
 
-            return([l],[label])
+            (l,) = ax.plot(bins, Mss, **plot_args)
+
+            return ([l], [label])
 
         else:
-
-            return([],[""])
+            return ([], [""])

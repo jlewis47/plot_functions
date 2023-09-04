@@ -4,20 +4,18 @@ from scipy.stats import binned_statistic
 import h5py
 
 from ...utils.utils import get_mod_path
-from ...generic.plot_functions import xy_plot
+from ...generic.plot_functions import xy_plot_vect
 from ...generic.stat import xy_stat
 
 
 def make_magbeta(mags, betas, magbins):
-
     bins, relation = xy_stat(mags, betas, magbins, mthd="median")
 
     return (bins, relation)
 
 
 def plot_magbeta(fig, ax, mags, betas, redshift=None, **plot_args):
-
-    line=xy_plot(
+    line = xy_plot_vect(
         fig,
         ax,
         mags,
@@ -26,54 +24,50 @@ def plot_magbeta(fig, ax, mags, betas, redshift=None, **plot_args):
         ylabel=r"$\mathrm{UV \, slope \, \beta}$",
         xscale="linear",
         yscale="linear",
-        **plot_args
+        **plot_args,
     )
 
     # if not os.path.isdir("./figs/"):
     #     os.makedirs("./figs/")
 
-    if redshift!=None:ax.set_title(f"z={redshift:.1f}")
+    if redshift != None:
+        ax.set_title(f"z={redshift:.1f}")
 
-    return(line)
+    return line
 
 
 def plot_dustier_magbeta(ax, redshift, zprec=0.1, **plot_args):
-
     dir_path = get_mod_path()
 
-    label="DUSTiER"
+    label = "DUSTiER"
 
-    with h5py.File(os.path.join(dir_path,"../constraints/dustier_beta_mag")) as src:
-
+    with h5py.File(os.path.join(dir_path, "../constraints/dustier_beta_mag")) as src:
         keys = list(src.keys())
-        redshifts = [float(k.split('_')[-1].lstrip('z')) for k in keys if "betas" in k]
+        redshifts = np.asarray(
+            [float(k.split("_")[-1].lstrip("z")) for k in keys if "betas" in k]
+        )
         beta_keys = [k for k in keys if "betas" in k]
-        
+
         dist = np.abs(redshift - redshifts)
 
         # print(keys, redshifts, beta_keys, dist)
         if np.any(dist):
-
             whs = np.argmin(dist)
 
-            mags = src['mags'][()] - 2.5*np.log10(1./0.8)
+            mags = src["mags"][()] - 2.5 * np.log10(1.0 / 0.8)
             betas = src[beta_keys[whs]][()]
 
             # print(mags)
 
+            (l,) = ax.plot(mags, betas, **plot_args)
 
-            l,=ax.plot(mags, betas, **plot_args)
-
-            return([l],[label])
+            return ([l], [label])
 
         else:
-
-            return([],[""])
-
+            return ([], [""])
 
 
 def plot_magbeta_constraints(ax, redshift, mag_bins, delta_z=0.1):
-
     """
     TODO:add sim stuff from Wu+20, Shen+20, Vijayan+20/21
     """
@@ -83,10 +77,10 @@ def plot_magbeta_constraints(ax, redshift, mag_bins, delta_z=0.1):
 
     dir_path = get_mod_path()
 
-    plot_dunl13(ax, redshift, mag_bins, dir_path, lines, labels)
-    plot_bouw14(ax, redshift, dir_path, lines, labels)
-    plot_fink12(ax, redshift, mag_bins, dir_path, lines, labels)
-    plot_bhat20(ax, redshift, lines, labels)
+    plot_dunl13(ax, redshift, mag_bins, dir_path, lines, labels, delta_z=delta_z)
+    plot_bouw14(ax, redshift, dir_path, lines, labels, delta_z=delta_z)
+    plot_fink12(ax, redshift, mag_bins, dir_path, lines, labels, delta_z=delta_z)
+    plot_bhat20(ax, redshift, lines, labels, delta_z=delta_z)
 
     return (lines, labels)
 
@@ -136,7 +130,7 @@ def plot_dunl13(ax, redshift, mag_bins, dir_path, lines, labels, delta_z=0.1):
         labels.append("Dunlop+13")
 
 
-def plot_bhat20(ax, redshift, lines, labels):
+def plot_bhat20(ax, redshift, lines, labels, delta_z=0.1):
     bhatawdekar20 = np.asarray(
         [
             [
@@ -162,7 +156,9 @@ def plot_bhat20(ax, redshift, lines, labels):
         ]
     )
 
-    ok_z_bhatawdekar = np.round(redshift) in [6.0, 7.0, 8.0, 9.0]
+    ok_z_bhatawdekar = np.any(
+        np.abs(redshift - np.asarray([6.0, 7.0, 8.0, 9.0])) < delta_z
+    )
 
     if ok_z_bhatawdekar:
         zed_ind = int(redshift - 6.0)
@@ -193,8 +189,8 @@ def plot_bhat20(ax, redshift, lines, labels):
 
 
 def plot_bouw14(ax, redshift, dir_path, lines, labels, delta_z=0.1):
-
     import csv
+
     bouwens14_betas = []
     bouwens14_zeds = []
     cur_pack = []
@@ -211,12 +207,11 @@ def plot_bouw14(ax, redshift, dir_path, lines, labels, delta_z=0.1):
                 cur_pack.append(np.float32(row[0].split(",")[:-1]))
     bouwens14_betas.append(np.asarray(cur_pack))
 
+    bouwens14_zeds = np.asarray(bouwens14_zeds)
 
     ok_z_bouw = np.argwhere(np.abs(redshift - bouwens14_zeds) < delta_z)
 
-
     if len(ok_z_bouw) > 0:
-
         # print(ok_z_bouw[0])
         # print(np.asarray(bouwens14_betas))
 
@@ -240,7 +235,7 @@ def plot_bouw14(ax, redshift, dir_path, lines, labels, delta_z=0.1):
         labels.append("Bouwens+14")
 
 
-def plot_fink12(ax, redshift, mag_bins, dir_path, lines, labels):
+def plot_fink12(ax, redshift, mag_bins, dir_path, lines, labels, delta_z=0.1):
     fink_headers = []
     fink_rows = []
 
@@ -287,7 +282,7 @@ def plot_fink12(ax, redshift, mag_bins, dir_path, lines, labels):
         [-2.58, -2.41, -2.28, -2.68, -2.01, -2.61, -2.54, -2.68, -2.56, -2.92]
     )
 
-    ok_z_fink = np.argwhere(np.abs(redshift - fink_zeds) < 0.1)
+    ok_z_fink = np.argwhere(np.abs(redshift - fink_zeds) < delta_z)
     if len(ok_z_fink) > 0:
         ok_z_betas = np.concatenate(fink_betas[ok_z_fink])
         ok_z_betas_low = np.concatenate(fink_betas_low[ok_z_fink])

@@ -51,7 +51,7 @@ def uvlf_plot(fig, ax, mag_bins, uvlfs, redshift=None, xerrs=None, yerrs=None, *
         mag_bins,
         uvlfs,
         xlabel="$\mathrm{M_{AB1600}}$",
-        ylabel="$\mathrm{UVLF, cMpc^{-3}}$",
+        ylabel="$\mathrm{UVLF, cMpc^{-3}.dex^{-1}}$",
         xscale="linear",
         yscale="log",
         xerrs=xerrs,
