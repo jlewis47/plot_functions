@@ -4,7 +4,8 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from matplotlib.colors import LogNorm
 import matplotlib
 from ..utils.utils import is_iter
-#from scipy.stats import gaussian_kde
+
+# from scipy.stats import gaussian_kde
 
 
 def get_fig_sizes(keys):
@@ -71,7 +72,7 @@ def xy_plot_stat(
     labels = []
 
     if "mean" in keys:
-        l,=ax.plot(bins, stats["mean"], ls="-", **plot_args)
+        (l,) = ax.plot(bins, stats["mean"], ls="-", **plot_args)
         median_ls = "--"
         lines.append(l)
         labels.append("mean")
@@ -80,17 +81,17 @@ def xy_plot_stat(
         plot_args["color"] = l.get_color()
 
     if "median" in keys:
-        l,=ax.plot(bins, stats["median"], ls=median_ls, **plot_args)
+        (l,) = ax.plot(bins, stats["median"], ls=median_ls, **plot_args)
         lines.append(l)
         labels.append("median")
 
     if "p5" in keys and "p95" in keys:
-        l=ax.fill_between(bins, stats["p5"], stats["p95"], alpha=0.5, **plot_args)
+        l = ax.fill_between(bins, stats["p5"], stats["p95"], alpha=0.5, **plot_args)
         lines.append(l)
         labels.append("5-95 pcnt")
 
     if np.any(x_low_counts != None) and np.any(y_low_counts != None):
-        l=ax.scatter(x_low_counts, y_low_counts, alpha=0.5, **plot_args)
+        l = ax.scatter(x_low_counts, y_low_counts, alpha=0.5, **plot_args)
         lines.append(l)
         labels.append("")
 
@@ -104,7 +105,7 @@ def xy_plot_stat(
     if ylabel != None:
         ax.set_ylabel(ylabel)
 
-    return(tuple(lines), tuple(labels))
+    return (tuple(lines), tuple(labels))
 
 
 def xy_plot_vect(
@@ -149,9 +150,9 @@ def xy_plot_vect(
 
     if is_iter(xs[0]):
         if xerrs == []:
-            xerrs = [np.zeros_like(x) for x in xs]
+            xerrs = [None for x in xs]
         if yerrs == []:
-            yerrs = [np.zeros_like(x) for x in xs]
+            yerrs = [None for x in xs]
 
         plots = [
             ax.errorbar(x, y, xerr=xerr, yerr=yerr, **plot_args)[0]
@@ -160,9 +161,9 @@ def xy_plot_vect(
 
     else:
         if xerrs == []:
-            xerrs = np.zeros_like(xs)
+            xerrs = None
         if yerrs == []:
-            yerrs = np.zeros_like(xs)
+            yerrs = None
 
         plots = ax.errorbar(xs, ys, xerr=xerrs, yerr=yerrs, **plot_args)[0]
 
@@ -198,10 +199,12 @@ def mf_plot(
     """
 
     if is_iter(bins[0]):
-        if xerrs == []:
-            xerrs = [np.zeros_like(x) for x in bins]
-        if yerrs == []:
-            yerrs = [np.zeros_like(x) for x in bins]
+        if xerrs == [] or xerrs == None:
+            xerrs = [np.full_like(x, None) for x in bins]
+        if yerrs == [] or yerrs == None:
+            yerrs = [np.full_like(x, None) for x in bins]
+
+        # print(bins, mfs, xerrs, yerrs)
 
         plots = [
             ax.errorbar(bin, mf, xerr=xerr, yerr=yerr, **plot_args)[0]
@@ -388,29 +391,27 @@ def density_plot_fancy(
     else:
         return (hist_x_ax, hist_y_ax)
 
-def joe_violin(fig, ax, xs, datas, bins=None, **plot_args):
 
+def joe_violin(fig, ax, xs, datas, bins=None, **plot_args):
     """
     xs: positions of distribution [N]
-    datas: distributions [Nx...] 
+    datas: distributions [Nx...]
 
     """
 
-    if bins==None:
-        mi,mx = np.min(np.concatenate(data)), np.max(np.concatenate(data))
-        nbins = np.log10(ma/mi)*4
-        bins=np.logspace()
+    if bins == None:
+        mi, ma = np.min(np.concatenate(data)), np.max(np.concatenate(data))
+        nbins = np.log10(ma / mi) * 4
+        bins = np.logspace()
 
-    pdfs=[]
-    #for every data, generate pdf
+    pdfs = []
+    # for every data, generate pdf
     for data in datas:
-        #kernel = gaussian_kde(data)
-        #pdfs.append(kernel(bins))
+        # kernel = gaussian_kde(data)
+        # pdfs.append(kernel(bins))
         hist = np.histogram(data, bins=bins)
-        pdfs.append(hist[0]/np.sum(hist[0]))
+        pdfs.append(hist[0] / np.sum(hist[0]))
 
-    #for every x,pdf pair, plot 
+    # for every x,pdf pair, plot
     for x, pdf in zip(xs, pdfs):
-        ax.plot(np.full(x,len(pdf)),pdf, **plot_args)
-
-        
+        ax.plot(np.full(x, len(pdf)), pdf, **plot_args)

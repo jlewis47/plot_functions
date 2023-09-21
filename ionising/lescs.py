@@ -18,6 +18,11 @@ def lesc_plot(
         "full": "$\mathrm{L_{esc, gxd}}$",
     }
 
+    if lesc_type != None:
+        lesc_label = lesc_labels[lesc_type]
+    else:
+        lesc_label = ""
+
     if log:
         lines = xy_plot_vect(
             fig,
@@ -25,7 +30,7 @@ def lesc_plot(
             masses,
             lescs,
             xlabel=xlabel,
-            ylabel=lesc_labels[lesc_type],
+            ylabel=lesc_label,
             xscale="log",
             yscale="log",
             **plot_args,
@@ -37,7 +42,7 @@ def lesc_plot(
             masses,
             lescs,
             xlabel=xlabel,
-            ylabel=lesc_labels[lesc_type],
+            ylabel=lesc_label,
             **plot_args,
         )
     # if not os.path.isdir('./figs'): os.makedirs('./figs')
@@ -88,7 +93,7 @@ def plot_ndot(fig, ax, redshifts, lescs, lo=None, hi=None, med=None, **plot_args
         redshifts,
         lescs,
         xlabel="redshift",
-        ylabel="$\mathrm{\dot{N_{ion}}, \, s^{-1}.cMpc^{-3}.h^3}$",
+        ylabel="$\mathrm{\dot{N_{ion}}, \, s^{-1}.cMpc^{-3}}$",
         xscale="linear",
         yscale="log",
         **plot_args,
@@ -186,9 +191,11 @@ def plot_cosmic_ndot_constraints(ax, redshift, zprec=0.5, **plot_args):
     ma17 = ax.fill_between(
         [5, 6], [2e50, 3e50], [5e50, 5e50], alpha=0.3, color="cyan", label="Madau+17"
     )
+    # print(fink_ndot_2019[0], 10 ** fink_ndot_2019[1])
+
     (f19,) = ax.plot(
         fink_ndot_2019[0],
-        10 ** fink_ndot_2019[1],
+        10 ** np.float64(fink_ndot_2019[1]),
         label="Finkelstein+19",
         linestyle="--",
     )
